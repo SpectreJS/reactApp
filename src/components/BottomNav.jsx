@@ -1,3 +1,4 @@
+import '../assets/style/BottomNav.css'
 import { NavLink } from 'react-router-dom'
 
 const items = [

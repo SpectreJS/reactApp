@@ -1,3 +1,5 @@
+import '../assets/style/ProjectCard.css'
+
 export function ProjectCard({ project, onSelect }) {
   return (
     <article className="project-card">

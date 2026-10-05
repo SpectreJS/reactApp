@@ -1,3 +1,4 @@
+import '../assets/style/DashboardPage.css'
 import { useNavigate } from 'react-router-dom'
 import { ProjectCard } from '../components/ProjectCard'
 import { projects, stats } from '../data/mockData'

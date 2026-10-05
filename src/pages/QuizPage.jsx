@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { questions } from '../data/mockData'
+import '../assets/style/QuizPage.css'
 
 export function QuizPage() {
   const navigate = useNavigate()
@@ -11,8 +12,11 @@ export function QuizPage() {
 
   const current = questions[index]
   const isLast = index === questions.length - 1
+  const progress = useMemo(() => ((index + (finished ? 1 : 0)) / questions.length) * 100, [finished, index])
 
   const handleAnswer = (option) => {
+    if (selected) return
+
     setSelected(option)
     if (option === current.answer) {
       setScore((value) => value + 1)
@@ -29,6 +33,12 @@ export function QuizPage() {
     setSelected('')
   }
 
+  const handlePrevious = () => {
+    if (index === 0) return
+    setIndex((value) => value - 1)
+    setSelected('')
+  }
+
   const resetQuiz = () => {
     setIndex(0)
     setScore(0)
@@ -37,6 +47,8 @@ export function QuizPage() {
   }
 
   if (finished) {
+    const percent = Math.round((score / questions.length) * 100)
+
     return (
       <>
         <header className="top-bar">
@@ -47,7 +59,7 @@ export function QuizPage() {
 
             <div className="brand-wrap">
               <div className="brand-badge">RML</div>
-              <span className="brand-name">Quiz App</span>
+              <span className="brand-name">React Mini Projects Lab</span>
             </div>
           </div>
 
@@ -61,19 +73,37 @@ export function QuizPage() {
           </div>
         </header>
 
-        <main className="content">
-          <section className="hero-block">
-            <div className="status-chip">
+        <main className="content quiz-page">
+          <section className="quiz-hero">
+            <div className="quiz-status">
               <span className="pulse-dot" />
-              <span>Assessment</span>
+              <span>Lab #06</span>
             </div>
-            <h1>Quiz App</h1>
-            <p>Test your React knowledge and challenge your recall.</p>
+            <h1>Interactive Knowledge Check</h1>
           </section>
 
-          <div className="module-card result-card">
-            <h3>Score: {score}/{questions.length}</h3>
-            <p>{score >= 3 ? 'Great job! You know your React basics.' : 'Nice try. Review the topics and try again.'}</p>
+          <div className="module-card quiz-result">
+            <div className="quiz-result-top">
+              <span className="quiz-badge">Current Score</span>
+              <span className="result-pill">{percent}%</span>
+            </div>
+
+            <h2>{score} / {questions.length} correct</h2>
+            <p>
+              {percent >= 75 ? 'Excellent work. You command the core React patterns with confidence.' : 'Solid effort. Review the concept and run it again to sharpen the flow.'}
+            </p>
+
+            <div className="quiz-result-score">
+              <div className="quiz-stat">
+                <small>Accuracy</small>
+                <strong>{percent}%</strong>
+              </div>
+              <div className="quiz-stat">
+                <small>Avg speed</small>
+                <strong>14.2s</strong>
+              </div>
+            </div>
+
             <button type="button" className="primary-action" onClick={resetQuiz}>Restart</button>
           </div>
         </main>
@@ -91,7 +121,7 @@ export function QuizPage() {
 
           <div className="brand-wrap">
             <div className="brand-badge">RML</div>
-            <span className="brand-name">Quiz App</span>
+            <span className="brand-name">React Mini Projects Lab</span>
           </div>
         </div>
 
@@ -105,37 +135,99 @@ export function QuizPage() {
         </div>
       </header>
 
-      <main className="content">
-        <section className="hero-block">
-          <div className="status-chip">
+      <main className="content quiz-page">
+        <section className="quiz-hero">
+          <div className="quiz-status">
             <span className="pulse-dot" />
-            <span>Assessment</span>
+            <span>Lab #06</span>
           </div>
-          <h1>Quiz App</h1>
-          <p>Test your React knowledge and challenge your recall.</p>
+          <h1>Interactive Knowledge Check</h1>
         </section>
 
-        <div className="module-card quiz-card">
-          <div className="quiz-topline">
-            <span>Question {index + 1}</span>
-            <span>{score} pts</span>
-          </div>
-          <h3>{current.prompt}</h3>
-
-          <div className="quiz-options">
-            {current.options.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={`quiz-choice ${selected === option ? 'selected' : ''}`}
-                onClick={() => handleAnswer(option)}
-              >
-                {option}
-              </button>
-            ))}
+        <div className="module-card quiz-surface">
+          <div className="quiz-header-row">
+            <div className="quiz-badges">
+              <span className="quiz-badge">React</span>
+              <span className="quiz-badge">JavaScript</span>
+              <span className="quiz-badge">HTML / CSS</span>
+            </div>
+            <span className="quiz-score-tag">Current Score: {score}/{questions.length}</span>
           </div>
 
-          <button type="button" className="primary-action" onClick={handleNext} disabled={!selected}>Next</button>
+          <div className="quiz-progress" aria-label="Question progress">
+            <div className="quiz-progress-bar" style={{ width: `${progress}%` }} />
+          </div>
+
+          <div className="quiz-meta-row">
+            <span>Question {index + 1} of {questions.length}</span>
+            <span>{current.category}</span>
+          </div>
+
+          <h2>{current.prompt}</h2>
+
+          <div className="ctn-quiz-options">
+            {current.options.map((option) => {
+              const isSelected = selected === option
+              const isCorrect = option === current.answer
+              const isWrong = selected && isSelected && !isCorrect
+
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  className={[
+                    'quiz-option',
+                    isSelected ? 'is-selected' : '',
+                    selected && isCorrect ? 'is-correct' : '',
+                    isWrong ? 'is-wrong' : '',
+                  ].join(' ')}
+                  onClick={() => handleAnswer(option)}
+                  disabled={Boolean(selected)}
+                >
+                  <span className="quiz-option--key">{String.fromCharCode(65 + current.options.indexOf(option))}</span>
+                  <span>{option}</span>
+                </button>
+              )
+            })}
+          </div>
+
+          <div className="quiz-actions">
+            <button type="button" className="quiz-action-button" onClick={handlePrevious} disabled={index === 0}>
+              Previous
+            </button>
+            <button type="button" className="quiz-action-button primary" onClick={handleNext} disabled={!selected}>
+              {isLast ? 'See Results' : 'Next Question'}
+            </button>
+          </div>
+        </div>
+
+        <div className="module-card quiz-telemetry">
+          <div className="quiz-telemetry-header">
+            <h3>Session Telemetry</h3>
+            <span className="quiz-live">Live</span>
+          </div>
+
+          <div className="quiz-stats-grid">
+            <div className="quiz-stat">
+              <small>Accuracy</small>
+              <strong>100%</strong>
+            </div>
+            <div className="quiz-stat">
+              <small>Avg speed</small>
+              <strong>14.2s</strong>
+            </div>
+            <div className="quiz-stat">
+              <small>Answered</small>
+              <strong>{Math.min(index + 1, questions.length)}/{questions.length}</strong>
+            </div>
+          </div>
+
+          <div className="quiz-topic-tags">
+            <span className="quiz-topic-tag">useState</span>
+            <span className="quiz-topic-tag">useEffect</span>
+            <span className="quiz-topic-tag">useContext</span>
+            <span className="quiz-topic-tag">useMemo</span>
+          </div>
         </div>
       </main>
     </>

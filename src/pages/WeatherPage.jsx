@@ -1,3 +1,4 @@
+import '../assets/style/WeatherPage.css'
 import { useEffect, useState } from 'react'
 import { weatherCodes } from '../data/mockData'
 

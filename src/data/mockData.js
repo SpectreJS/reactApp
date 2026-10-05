@@ -31,10 +31,30 @@ export const defaultBlogPosts = [
 ]
 
 export const questions = [
-  { prompt: 'Which hook is best for local state in a function component?', options: ['useState', 'useMemo', 'useEffect', 'useRef'], answer: 'useState' },
-  { prompt: 'What is the purpose of JSX?', options: ['Style sheet syntax', 'A template language for UI', 'CSS utility library', 'Database query syntax'], answer: 'A template language for UI' },
-  { prompt: 'Which prop pattern is commonly used to pass state upward?', options: ['Inheritance', 'Callback props', 'Context injection', 'Portal rendering'], answer: 'Callback props' },
-  { prompt: 'What does the map() method return?', options: ['An object', 'A new array', 'A string', 'A promise'], answer: 'A new array' },
+  {
+    category: 'Hooks & State',
+    prompt: 'What does the useState hook return in React?',
+    options: ['A single state variable object', 'An array with the current state value and updater function', 'A Redux reducer dispatch function', 'A promise resolving to the next state'],
+    answer: 'An array with the current state value and updater function',
+  },
+  {
+    category: 'Rendering',
+    prompt: 'What is the purpose of JSX?',
+    options: ['Style sheet syntax', 'A template language for UI', 'CSS utility library', 'Database query syntax'],
+    answer: 'A template language for UI',
+  },
+  {
+    category: 'Data Flow',
+    prompt: 'Which prop pattern is commonly used to pass state upward?',
+    options: ['Inheritance', 'Callback props', 'Context injection', 'Portal rendering'],
+    answer: 'Callback props',
+  },
+  {
+    category: 'Array Methods',
+    prompt: 'What does the map() method return?',
+    options: ['An object', 'A new array', 'A string', 'A promise'],
+    answer: 'A new array',
+  },
 ]
 
 export const weatherCodes = {

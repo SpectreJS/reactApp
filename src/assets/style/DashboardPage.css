@@ -1,0 +1,193 @@
+.telemetry-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: 16px;
+  box-shadow: 0 1px 1px var(--shadow);
+}
+
+.telemetry-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--surface-container);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.telemetry-icon .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.telemetry-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--outline);
+  font-weight: 700;
+}
+
+.telemetry-text {
+  margin: 0;
+  color: var(--on-surface);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stat-card {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: 16px;
+  padding: 12px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 110px;
+  box-shadow: 0 1px 1px var(--shadow);
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--on-surface-variant);
+}
+
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.stat-icon {
+  font-size: 20px;
+}
+
+.stat-icon.primary { color: var(--primary); }
+.stat-icon.secondary { color: var(--secondary); }
+.stat-icon.tertiary { color: var(--tertiary); }
+.stat-icon.primary-alt { color: var(--primary-container); }
+
+.stat-value {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(22px, 5vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--on-surface);
+  line-height: 1.1;
+}
+
+.stat-meta {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+.stat-meta.primary { color: var(--primary); }
+.stat-meta.secondary { color: var(--secondary); }
+.stat-meta.tertiary { color: var(--tertiary); }
+.stat-meta.primary-alt { color: var(--primary-container); }
+
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-wrap input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid var(--outline-variant);
+  border-radius: 12px;
+  background: var(--surface-container-lowest);
+  color: var(--on-surface);
+  padding: 0 56px 0 38px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-wrap input:focus {
+  border-color: rgba(79, 70, 229, 0.8);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+.search-wrap input::placeholder {
+  color: var(--outline);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--outline);
+  font-size: 18px;
+}
+
+.search-shortcut {
+  position: absolute;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-high);
+  color: var(--outline);
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+.projects-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.projects-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--on-surface);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.projects-header span {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--on-surface-variant);
+}
