@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { questions } from '../data/mockData'
-import '../assets/style/QuizPage.css'
+import '../assets/style/pages/QuizPage.scss'
 
 export function QuizPage() {
   const navigate = useNavigate()

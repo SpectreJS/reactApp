@@ -685,6 +685,7 @@ textarea:focus {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .todo-stat-card strong {

@@ -1,4 +1,4 @@
-import '../assets/style/ProjectCard.css'
+import '../assets/style/pages/ProjectCard.scss'
 
 export function ProjectCard({ project, onSelect }) {
   return (
