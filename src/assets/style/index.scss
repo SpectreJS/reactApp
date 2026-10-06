@@ -1,0 +1,54 @@
+@use "./common/global" as *;
+@use "./components/layout" as *;
+@use "./components/contact" as *;
+
+.module-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-family: $font-display;
+}
+
+.back-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--on-surface-variant);
+	font-weight: 600;
+
+	.material-symbols-outlined {
+		font-size: 18px;
+	}
+}
+
+.module-header h2 {
+	font-size: 26px;
+	font-weight: 700;
+}
+
+.module-card {
+	@include panel-card;
+}
+
+.field-grid,
+.list-stack,
+.ctn-quiz-options {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.primary-action {
+	border: none;
+	background: linear-gradient(135deg, var(--primary-container), var(--primary));
+	color: var(--on-primary);
+	border-radius: 12px;
+	padding: 10px 14px;
+	font-weight: 600;
+	box-shadow: 0 8px 16px rgba(53, 37, 205, 0.16);
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}

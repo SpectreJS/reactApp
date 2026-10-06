@@ -1,17 +1,50 @@
-export const stats = [
+export const baseStats = [
   { label: 'Projects', value: '5', meta: 'Mini Projects', icon: 'science', color: 'primary' },
   { label: 'Primitives', value: '12', meta: 'Hooks used', icon: 'extension', color: 'tertiary' },
   { label: 'Network', value: 'Live Sync', meta: 'REST APIs', icon: 'cloud_sync', color: 'secondary' },
   { label: 'Persistence', value: 'Client State', meta: 'LocalStorage', icon: 'database', color: 'primary-alt' },
 ]
 
-export const projects = [
+export const baseProjects = [
   { key: 'contacts', title: 'Contacts', subtitle: 'Full CRUD Sandbox', desc: 'Manage contacts with CRUD, forms & LocalStorage with schema validation.', icon: 'contacts', accent: 'primary', chips: ['React', 'Formik', 'Storage'], footer: 'v1.4 • IndexedDB Sync', button: 'Open Project' },
   { key: 'todo', title: 'Todo List', subtitle: 'State & Persistence', desc: 'Manage tasks, filters, completion states & persistence with custom reducers.', icon: 'check_circle', accent: 'surface', chips: ['Hooks', 'State', 'LocalStorage'], footer: 'useReducer Flow', button: 'Open Project' },
   { key: 'weather', title: 'Weather', subtitle: 'REST Async Client', desc: 'Search cities & real-time conditions with live debounced geolocation query feeds.', icon: 'wb_sunny', accent: 'secondary', chips: ['REST API', 'Async', 'Fetch'], footer: 'OpenWeather API', button: 'Open Project' },
   { key: 'blog', title: 'Dev Blog', subtitle: 'Client Routing', desc: 'Create, edit articles & comments using simulated database state and markdown rendering.', icon: 'article', accent: 'tertiary', chips: ['Router', 'Markdown', 'CRUD'], footer: 'React Router v7', button: 'Open Project' },
   { key: 'quiz', title: 'Quiz App', subtitle: 'Interactive Learning', desc: 'Challenge your knowledge with timed questions, scoring, and instant feedback loops.', icon: 'quiz', accent: 'primary', chips: ['State', 'Logic', 'UX'], footer: 'Adaptive Flow', button: 'Open Project' },
 ]
+
+export const getStats = (language = 'en') => {
+  const translation = language === 'fr'
+    ? {
+        Projects: 'Projets',
+        Primitives: 'Primitives',
+        Network: 'Réseau',
+        Persistence: 'Persistance',
+      }
+    : {}
+
+  return baseStats.map((stat) => ({
+    ...stat,
+    label: translation[stat.label] ?? stat.label,
+  }))
+}
+
+export const getProjects = (language = 'en') => {
+  const translations = language === 'fr'
+    ? {
+        contacts: { title: 'Contacts', subtitle: 'Sandbox CRUD complet', button: 'Ouvrir le projet' },
+        todo: { title: 'Liste de tâches', subtitle: 'État & persistance', button: 'Ouvrir le projet' },
+        weather: { title: 'Météo', subtitle: 'Client asynchrone REST', button: 'Ouvrir le projet' },
+        blog: { title: 'Blog Dev', subtitle: 'Routage client', button: 'Ouvrir le projet' },
+        quiz: { title: 'Quiz', subtitle: 'Apprentissage interactif', button: 'Ouvrir le projet' },
+      }
+    : {}
+
+  return baseProjects.map((project) => ({
+    ...project,
+    ...(translations[project.key] ?? {}),
+  }))
+}
 
 export const defaultContacts = [
   { id: 1, name: 'Alicia Stone', email: 'alicia@studio.dev', role: 'Product Designer' },
