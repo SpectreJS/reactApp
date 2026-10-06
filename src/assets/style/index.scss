@@ -52,3 +52,18 @@
 		cursor: not-allowed;
 	}
 }
+
+.switchStyle {
+	display: inline-flex;
+	gap: 6px;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.7);
+	border: 1px solid rgba(119, 117, 135, 0.18);
+	padding: 4px;
+}
+
+.nav-profil{
+	display: grid;
+	grid-template-columns: auto 50px;
+	gap: 10px;
+}
