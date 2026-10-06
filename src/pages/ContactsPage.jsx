@@ -111,7 +111,6 @@ export function ContactsPage() {
 				<div className="search-wrap contacts-search">
 					<span className="material-symbols-outlined search-icon">search</span>
 					<input type="text" placeholder={t('contacts.searchPlaceholder')} aria-label={t('contacts.searchPlaceholder')} />
-					<span className="search-shortcut">⌘F</span>
 				</div>
 
 				<section className="projects-panel">

@@ -53,7 +53,6 @@ export function DashboardPage() {
 				<div className="search-wrap">
 					<span className="material-symbols-outlined search-icon">search</span>
 					<input type="text" placeholder={t('dashboard.searchPlaceholder')} aria-label={t('dashboard.searchPlaceholder')} />
-					<span className="search-shortcut">⌘K</span>
 				</div>
 
 				<section className="projects-panel">
