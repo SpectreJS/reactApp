@@ -155,19 +155,13 @@ a:hover,
 }
 
 button:active,
-a:active,
-.bottom-nav__item:active,
-.module-card:active,
-.stat-card:active,
-.project-card:active,
-.contact-item-card:active,
-.task-item:active,
-.quiz-option:active,
+.icon-button:active,
+.back-button:active,
 .filter-pill:active,
 .ghost-button:active,
 .primary-action:active,
-.icon-button:active,
-.back-button:active {
+.quiz-option:active,
+.quiz-choice:active {
 	transform: translateY(0) scale(0.985);
 }
 

@@ -169,22 +169,6 @@
 		color: var(--outline);
 		font-size: 18px;
 	}
-
-	.search-shortcut {
-		position: absolute;
-		right: 10px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 4px 8px;
-		border-radius: 6px;
-		border: 1px solid var(--outline-variant);
-		background: var(--surface-container-high);
-		color: var(--outline);
-		font-size: 10px;
-		font-family: 'JetBrains Mono', monospace;
-		font-weight: 600;
-	}
 }
 
 .projects-panel {
