@@ -114,6 +114,77 @@ button {
 	cursor: pointer;
 }
 
+button,
+a,
+.bottom-nav__item,
+.module-card,
+.stat-card,
+.project-card,
+.contact-item-card,
+.task-item,
+.quiz-option,
+.filter-pill,
+.ghost-button,
+.primary-action,
+.icon-button,
+.back-button {
+	transition:
+		transform 0.24s ease,
+		box-shadow 0.24s ease,
+		background-color 0.24s ease,
+		border-color 0.24s ease,
+		opacity 0.24s ease,
+		filter 0.24s ease;
+}
+
+button:hover,
+a:hover,
+.bottom-nav__item:hover,
+.module-card:hover,
+.stat-card:hover,
+.project-card:hover,
+.contact-item-card:hover,
+.task-item:hover,
+.quiz-option:hover,
+.filter-pill:hover,
+.ghost-button:hover,
+.primary-action:hover,
+.icon-button:hover,
+.back-button:hover {
+	transform: translateY(-2px);
+}
+
+button:active,
+a:active,
+.bottom-nav__item:active,
+.module-card:active,
+.stat-card:active,
+.project-card:active,
+.contact-item-card:active,
+.task-item:active,
+.quiz-option:active,
+.filter-pill:active,
+.ghost-button:active,
+.primary-action:active,
+.icon-button:active,
+.back-button:active {
+	transform: translateY(0) scale(0.985);
+}
+
+button,
+a {
+	-webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
 input,
 textarea {
 	width: 100%;
