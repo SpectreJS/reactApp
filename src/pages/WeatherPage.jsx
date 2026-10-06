@@ -1,6 +1,8 @@
 import '../assets/style/pages/WeatherPage.scss'
 import { useEffect, useState } from 'react'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import { weatherCodes } from '../data/mockData'
+import { useLanguage } from '../i18n'
 
 const getWeatherMeta = (code) => {
   const label = weatherCodes[code] ?? 'Current conditions'
@@ -40,6 +42,7 @@ const formatWeekday = (value) => {
 }
 
 export function WeatherPage() {
+  const { t } = useLanguage()
   const [city, setCity] = useState('San Francisco')
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -48,7 +51,7 @@ export function WeatherPage() {
 
   const loadWeather = async (query = city) => {
     if (!query.trim()) {
-      setCityError('field required')
+      setCityError(t('weather.emptyError'))
       return
     }
 
@@ -105,7 +108,7 @@ export function WeatherPage() {
         forecast,
       })
     } catch (err) {
-      setError('Unable to fetch weather. Try another city.')
+      setError(t('weather.searchError'))
       setWeather(null)
     } finally {
       setLoading(false)
@@ -121,31 +124,34 @@ export function WeatherPage() {
     <>
       <header className="top-bar">
         <div className="top-left">
-          <button className="icon-button" type="button" aria-label="Open Navigation Menu">
+          <button className="icon-button" type="button" aria-label={t('common.openMenu')}>
             <span className="material-symbols-outlined">menu</span>
           </button>
 
           <div className="brand-wrap">
             <div className="brand-badge">RML</div>
-            <span className="brand-name">Weather</span>
+            <span className="brand-name">{t('weather.status')}</span>
           </div>
         </div>
 
-        <div className="avatar-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
-            alt="Studio portrait"
-            className="avatar"
-          />
-          <span className="avatar-status" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <LanguageSwitcher />
+          <div className="avatar-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+              alt="Studio portrait"
+              className="avatar"
+            />
+            <span className="avatar-status" />
+          </div>
         </div>
       </header>
 
       <main className="content weather-shell">
         <section className="weather-hero">
           <div className="weather-hero__copy">
-            <h1>Weather Radar</h1>
-            <span className="weather-badge">Async/Await</span>
+            <h1>{t('weather.title')}</h1>
+            <span className="weather-badge">{t('weather.badge')}</span>
           </div>
           <div className="weather-timing-badge">
             <span className="material-symbols-outlined">timer</span>
@@ -163,18 +169,31 @@ export function WeatherPage() {
                 setCity(e.target.value)
                 if (e.target.value.trim()) setCityError('')
               }}
-              placeholder="Search for a city, e.g., San Francisco, Tokyo..."
+              placeholder={t('weather.searchPlaceholder')}
             />
             <span className="weather-shortcut">⌘K</span>
           </div>
 
-          <button type="button" className="primary-action weather-search-button" onClick={() => loadWeather(city)}>
-            <span className="material-symbols-outlined">progress_activity</span>
-            <span>Search</span>
+          <button
+            type="button"
+            className="primary-action weather-search-button"
+            onClick={() => loadWeather(city)}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span className="material-symbols-outlined" style={{ animation: 'spin 1s linear infinite' }}>sync</span>
+                <span>{t('weather.loading')}</span>
+              </>
+            ) : (
+              <>
+                <span>{t('weather.search')}</span>
+              </>
+            )}
           </button>
         </div>
 
-        {loading && <p className="status-line">Loading weather data...</p>}
+        {loading && <p className="status-line">{t('weather.loading')}</p>}
         {error && <p className="status-line error">{error}</p>}
 
         {weather && (
@@ -206,12 +225,12 @@ export function WeatherPage() {
 
                 <div className="weather-range-box">
                   <div>
-                    <span>Day Temperature Range</span>
+                    <span>{t('weather.dayTempRange')}</span>
                     <strong>Low: {weather.lowF}°F • High: {weather.highF}°F</strong>
                   </div>
                   <div className="weather-sun-times">
-                    <span><b>06:12 AM</b> Sunrise</span>
-                    <span><b>08:04 PM</b> Sunset</span>
+                    <span><b>06:12 AM</b> {t('weather.sunrise')}</span>
+                    <span><b>08:04 PM</b> {t('weather.sunset')}</span>
                   </div>
                 </div>
               </div>

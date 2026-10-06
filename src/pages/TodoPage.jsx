@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import { defaultTasks } from '../data/mockData'
+import { useLanguage } from '../i18n'
 
 export function TodoPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [tasks, setTasks] = useState(() => {
     if (typeof window === 'undefined') return defaultTasks
     const saved = localStorage.getItem('mini-lab-tasks')
@@ -36,7 +39,7 @@ export function TodoPage() {
     event.preventDefault()
 
     if (!text.trim()) {
-      setError('field required')
+      setError(t('common.fieldRequired'))
       return
     }
 
@@ -57,23 +60,26 @@ export function TodoPage() {
     <>
       <header className="top-bar">
         <div className="top-left">
-          <button className="icon-button" type="button" aria-label="Open Navigation Menu">
+          <button className="icon-button" type="button" aria-label={t('common.openMenu')}>
             <span className="material-symbols-outlined">menu</span>
           </button>
 
           <div className="brand-wrap">
             <div className="brand-badge">RML</div>
-            <span className="brand-name">Todo Productivity</span>
+            <span className="brand-name">{t('todo.title')}</span>
           </div>
         </div>
 
-        <div className="avatar-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
-            alt="Studio portrait"
-            className="avatar"
-          />
-          <span className="avatar-status" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <LanguageSwitcher />
+          <div className="avatar-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+              alt="Studio portrait"
+              className="avatar"
+            />
+            <span className="avatar-status" />
+          </div>
         </div>
       </header>
 
@@ -81,10 +87,10 @@ export function TodoPage() {
         <section className="hero-block">
           <div className="status-chip">
             <span className="pulse-dot" />
-            <span>Productivity</span>
+            <span>{t('todo.status')}</span>
           </div>
-          <h1>Todo Productivity</h1>
-          <p>Keep your priorities clear, your focus sharp, and your momentum strong.</p>
+          <h1>{t('todo.title')}</h1>
+          <p>{t('todo.subtitle')}</p>
         </section>
 
         <div className="todo-overview">
@@ -93,7 +99,7 @@ export function TodoPage() {
               <span className="material-symbols-outlined">task_alt</span>
             </div>
             <div className="stat-label">
-              <small>Total tasks</small>
+              <small>{t('todo.total')}</small>
               <strong>{tasks.length}</strong>
             </div>
           </div>
@@ -103,7 +109,7 @@ export function TodoPage() {
               <span className="material-symbols-outlined">pending_actions</span>
             </div>
             <div className="stat-label">
-              <small>Active</small>
+              <small>{t('todo.active')}</small>
               <strong>{activeCount}</strong>
             </div>
           </div>
@@ -113,7 +119,7 @@ export function TodoPage() {
               <span className="material-symbols-outlined">trending_up</span>
             </div>
             <div className="stat-label">
-              <small>Completed</small>
+              <small>{t('todo.completed')}</small>
               <strong>{completionRate}%</strong>
             </div>
           </div>
@@ -123,8 +129,8 @@ export function TodoPage() {
           <div className="todo-panel">
             <div className="todo-panel-header">
               <div>
-                <span className="eyebrow">Today</span>
-                <h2>Priority board</h2>
+                <span className="eyebrow">{t('todo.today')}</span>
+                <h2>{t('todo.priorityBoard')}</h2>
               </div>
               <span className="todo-percent">{completionRate}%</span>
             </div>
@@ -142,17 +148,21 @@ export function TodoPage() {
                     setText(e.target.value)
                     if (e.target.value.trim()) setError('')
                   }}
-                  placeholder="Add a task"
+                  placeholder={t('todo.addTaskPlaceholder')}
                 />
                 {error && <p className="field-error">{error}</p>}
               </div>
-              <button type="submit" className="primary-action">Add task</button>
+              <button type="submit" className="primary-action">{t('todo.addTask')}</button>
             </form>
 
             <div className="filter-row">
-              {['all', 'active', 'completed'].map((value) => (
+              {[
+                { value: 'all', label: t('todo.all') },
+                { value: 'active', label: t('todo.filterActive') },
+                { value: 'completed', label: t('todo.filterCompleted') },
+              ].map(({ value, label }) => (
                 <button key={value} type="button" className={`filter-pill ${filter === value ? 'active' : ''}`} onClick={() => setFilter(value)}>
-                  {value}
+                  {label}
                 </button>
               ))}
             </div>
@@ -164,7 +174,7 @@ export function TodoPage() {
                     <input type="checkbox" checked={task.completed} onChange={() => toggleTask(task.id)} />
                     <span>{task.text}</span>
                   </label>
-                  <button type="button" className="ghost-button" onClick={() => deleteTask(task.id)}>Delete</button>
+                  <button type="button" className="ghost-button" onClick={() => deleteTask(task.id)}>{t('todo.delete')}</button>
                 </div>
               ))}
             </div>
@@ -172,8 +182,8 @@ export function TodoPage() {
 
           <aside className="todo-side-panel">
             <div className="todo-side-card">
-              <span className="eyebrow accent">Focus</span>
-              <h3>Productive day</h3>
+              <span className="eyebrow accent">{t('todo.focus')}</span>
+              <h3>{t('todo.productiveDay')}</h3>
               <ul className="todo-focus-list">
                 <li><span className="material-symbols-outlined">check_circle</span> Ship core milestone</li>
                 <li><span className="material-symbols-outlined">schedule</span> Two deep work blocks</li>
@@ -182,9 +192,9 @@ export function TodoPage() {
             </div>
 
             <div className="todo-side-card muted">
-              <span className="eyebrow accent">Momentum</span>
-              <h3>Winning streak</h3>
-              <div className="streak-value">6 days</div>
+              <span className="eyebrow accent">{t('todo.momentum')}</span>
+              <h3>{t('todo.winningStreak')}</h3>
+              <div className="streak-value">{t('todo.streak')}</div>
               <p>Small consistent actions create big wins over time.</p>
             </div>
           </aside>

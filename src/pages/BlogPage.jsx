@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import { defaultBlogPosts } from '../data/mockData'
+import { useLanguage } from '../i18n'
 
 export function BlogPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [posts, setPosts] = useState(() => {
     if (typeof window === 'undefined') return defaultBlogPosts
     const saved = localStorage.getItem('mini-lab-blog')
@@ -20,15 +23,15 @@ export function BlogPage() {
   const updateField = (field, value) => {
     if (field === 'title') setTitle(value)
     if (field === 'excerpt') setExcerpt(value)
-    setErrors((current) => ({ ...current, [field]: value.trim() ? '' : 'field required' }))
+    setErrors((current) => ({ ...current, [field]: value.trim() ? '' : t('common.fieldRequired') }))
   }
 
   const addPost = (event) => {
     event.preventDefault()
 
     const nextErrors = {
-      title: title.trim() ? '' : 'field required',
-      excerpt: excerpt.trim() ? '' : 'field required',
+      title: title.trim() ? '' : t('common.fieldRequired'),
+      excerpt: excerpt.trim() ? '' : t('common.fieldRequired'),
     }
 
     setErrors(nextErrors)
@@ -47,23 +50,26 @@ export function BlogPage() {
     <>
       <header className="top-bar">
         <div className="top-left">
-          <button className="icon-button" type="button" aria-label="Open Navigation Menu">
+          <button className="icon-button" type="button" aria-label={t('common.openMenu')}>
             <span className="material-symbols-outlined">menu</span>
           </button>
 
           <div className="brand-wrap">
             <div className="brand-badge">RML</div>
-            <span className="brand-name">Dev Blog</span>
+            <span className="brand-name">{t('blog.title')}</span>
           </div>
         </div>
 
-        <div className="avatar-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
-            alt="Studio portrait"
-            className="avatar"
-          />
-          <span className="avatar-status" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <LanguageSwitcher />
+          <div className="avatar-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+              alt="Studio portrait"
+              className="avatar"
+            />
+            <span className="avatar-status" />
+          </div>
         </div>
       </header>
 
@@ -71,10 +77,10 @@ export function BlogPage() {
         <section className="hero-block">
           <div className="status-chip">
             <span className="pulse-dot" />
-            <span>Writes & notes</span>
+            <span>{t('blog.status')}</span>
           </div>
-          <h1>Dev Blog</h1>
-          <p>Capture insights and publish technical notes.</p>
+          <h1>{t('blog.title')}</h1>
+          <p>{t('blog.subtitle')}</p>
         </section>
 
         <form className="module-card blog-form" onSubmit={addPost}>
@@ -83,7 +89,7 @@ export function BlogPage() {
               className={errors.title ? 'input-error' : ''}
               value={title}
               onChange={(e) => updateField('title', e.target.value)}
-              placeholder="Article title"
+              placeholder={t('blog.articleTitle')}
             />
             {errors.title && <p className="field-error">{errors.title}</p>}
           </div>
@@ -93,19 +99,19 @@ export function BlogPage() {
               className={errors.excerpt ? 'input-error' : ''}
               value={excerpt}
               onChange={(e) => updateField('excerpt', e.target.value)}
-              placeholder="Write a short insight..."
+              placeholder={t('blog.articleExcerpt')}
               rows={4}
             />
             {errors.excerpt && <p className="field-error">{errors.excerpt}</p>}
           </div>
 
-          <button type="submit" className="primary-action">Publish</button>
+          <button type="submit" className="primary-action">{t('blog.publish')}</button>
         </form>
 
         <section className="projects-panel">
           <div className="projects-header">
-            <h2>Latest posts</h2>
-            <span>{posts.length} items</span>
+            <h2>{t('blog.latestPosts')}</h2>
+            <span>{posts.length} {t('blog.items')}</span>
           </div>
 
           <div className="list-stack">

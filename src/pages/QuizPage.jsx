@@ -1,10 +1,13 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import { questions } from '../data/mockData'
+import { useLanguage } from '../i18n'
 import '../assets/style/pages/QuizPage.scss'
 
 export function QuizPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [index, setIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [selected, setSelected] = useState('')
@@ -53,23 +56,26 @@ export function QuizPage() {
       <>
         <header className="top-bar">
           <div className="top-left">
-            <button className="icon-button" type="button" aria-label="Open Navigation Menu">
+            <button className="icon-button" type="button" aria-label={t('common.openMenu')}>
               <span className="material-symbols-outlined">menu</span>
             </button>
 
             <div className="brand-wrap">
               <div className="brand-badge">RML</div>
-              <span className="brand-name">React Mini Projects Lab</span>
+              <span className="brand-name">{t('dashboard.title')}</span>
             </div>
           </div>
 
-          <div className="avatar-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
-              alt="Studio portrait"
-              className="avatar"
-            />
-            <span className="avatar-status" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <LanguageSwitcher />
+            <div className="avatar-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+                alt="Studio portrait"
+                className="avatar"
+              />
+              <span className="avatar-status" />
+            </div>
           </div>
         </header>
 
@@ -77,14 +83,14 @@ export function QuizPage() {
           <section className="quiz-hero">
             <div className="quiz-status">
               <span className="pulse-dot" />
-              <span>Lab #06</span>
+              <span>{t('quiz.status')}</span>
             </div>
-            <h1>Interactive Knowledge Check</h1>
+            <h1>{t('quiz.title')}</h1>
           </section>
 
           <div className="module-card quiz-result">
             <div className="quiz-result-top">
-              <span className="quiz-badge">Current Score</span>
+              <span className="quiz-badge">{t('quiz.score')}</span>
               <span className="result-pill">{percent}%</span>
             </div>
 
@@ -95,16 +101,16 @@ export function QuizPage() {
 
             <div className="quiz-result-score">
               <div className="quiz-stat">
-                <small>Accuracy</small>
+                <small>{t('quiz.accuracy')}</small>
                 <strong>{percent}%</strong>
               </div>
               <div className="quiz-stat">
-                <small>Avg speed</small>
+                <small>{t('quiz.avgSpeed')}</small>
                 <strong>14.2s</strong>
               </div>
             </div>
 
-            <button type="button" className="primary-action" onClick={resetQuiz}>Restart</button>
+            <button type="button" className="primary-action" onClick={resetQuiz}>{t('quiz.restart')}</button>
           </div>
         </main>
       </>
@@ -115,23 +121,26 @@ export function QuizPage() {
     <>
       <header className="top-bar">
         <div className="top-left">
-          <button className="icon-button" type="button" aria-label="Open Navigation Menu">
+          <button className="icon-button" type="button" aria-label={t('common.openMenu')}>
             <span className="material-symbols-outlined">menu</span>
           </button>
 
           <div className="brand-wrap">
             <div className="brand-badge">RML</div>
-            <span className="brand-name">React Mini Projects Lab</span>
+            <span className="brand-name">{t('dashboard.title')}</span>
           </div>
         </div>
 
-        <div className="avatar-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
-            alt="Studio portrait"
-            className="avatar"
-          />
-          <span className="avatar-status" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <LanguageSwitcher />
+          <div className="avatar-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+              alt="Studio portrait"
+              className="avatar"
+            />
+            <span className="avatar-status" />
+          </div>
         </div>
       </header>
 
@@ -139,9 +148,9 @@ export function QuizPage() {
         <section className="quiz-hero">
           <div className="quiz-status">
             <span className="pulse-dot" />
-            <span>Lab #06</span>
+            <span>{t('quiz.status')}</span>
           </div>
-          <h1>Interactive Knowledge Check</h1>
+          <h1>{t('quiz.title')}</h1>
         </section>
 
         <div className="module-card quiz-surface">
@@ -151,7 +160,7 @@ export function QuizPage() {
               <span className="quiz-badge">JavaScript</span>
               <span className="quiz-badge">HTML / CSS</span>
             </div>
-            <span className="quiz-score-tag">Current Score: {score}/{questions.length}</span>
+            <span className="quiz-score-tag">{t('quiz.score')}: {score}/{questions.length}</span>
           </div>
 
           <div className="quiz-progress" aria-label="Question progress">
@@ -159,7 +168,7 @@ export function QuizPage() {
           </div>
 
           <div className="quiz-meta-row">
-            <span>Question {index + 1} of {questions.length}</span>
+            <span>{t('quiz.questionOf')} {index + 1} {t('quiz.of')} {questions.length}</span>
             <span>{current.category}</span>
           </div>
 
@@ -193,31 +202,31 @@ export function QuizPage() {
 
           <div className="quiz-actions">
             <button type="button" className="quiz-action-button" onClick={handlePrevious} disabled={index === 0}>
-              Previous
+              {t('quiz.previous')}
             </button>
             <button type="button" className="quiz-action-button primary" onClick={handleNext} disabled={!selected}>
-              {isLast ? 'See Results' : 'Next Question'}
+              {isLast ? t('quiz.seeResults') : t('quiz.next')}
             </button>
           </div>
         </div>
 
         <div className="module-card quiz-telemetry">
           <div className="quiz-telemetry-header">
-            <h3>Session Telemetry</h3>
-            <span className="quiz-live">Live</span>
+            <h3>{t('quiz.sessionTelemetry')}</h3>
+            <span className="quiz-live">{t('quiz.live')}</span>
           </div>
 
           <div className="quiz-stats-grid">
             <div className="quiz-stat">
-              <small>Accuracy</small>
+              <small>{t('quiz.accuracy')}</small>
               <strong>100%</strong>
             </div>
             <div className="quiz-stat">
-              <small>Avg speed</small>
+              <small>{t('quiz.avgSpeed')}</small>
               <strong>14.2s</strong>
             </div>
             <div className="quiz-stat">
-              <small>Answered</small>
+              <small>{t('quiz.answered')}</small>
               <strong>{Math.min(index + 1, questions.length)}/{questions.length}</strong>
             </div>
           </div>

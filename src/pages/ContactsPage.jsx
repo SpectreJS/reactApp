@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import { defaultContacts } from '../data/mockData'
+import { useLanguage } from '../i18n'
 
 export function ContactsPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [contacts, setContacts] = useState(() => {
     if (typeof window === 'undefined') return defaultContacts
     const saved = localStorage.getItem('mini-lab-contacts')
@@ -17,7 +20,7 @@ export function ContactsPage() {
   }, [contacts])
 
   const validateField = (name, value) => {
-    if (!value.trim()) return 'field required'
+    if (!value.trim()) return t('common.fieldRequired')
     return ''
   }
 
@@ -46,30 +49,33 @@ export function ContactsPage() {
 
   const updateField = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }))
-    setErrors((current) => ({ ...current, [field]: value.trim() ? '' : 'field required' }))
+    setErrors((current) => ({ ...current, [field]: value.trim() ? '' : t('common.fieldRequired') }))
   }
 
   return (
     <>
       <header className="top-bar">
         <div className="top-left">
-          <button className="icon-button" type="button" aria-label="Open Navigation Menu">
+          <button className="icon-button" type="button" aria-label={t('common.openMenu')}>
             <span className="material-symbols-outlined">menu</span>
           </button>
 
           <div className="brand-wrap">
             <div className="brand-badge">RML</div>
-            <span className="brand-name">Contacts</span>
+            <span className="brand-name">{t('contacts.title')}</span>
           </div>
         </div>
 
-        <div className="avatar-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
-            alt="Studio portrait"
-            className="avatar"
-          />
-          <span className="avatar-status" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <LanguageSwitcher />
+          <div className="avatar-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+              alt="Studio portrait"
+              className="avatar"
+            />
+            <span className="avatar-status" />
+          </div>
         </div>
       </header>
 
@@ -77,16 +83,16 @@ export function ContactsPage() {
         <section className="hero-block">
           <div className="status-chip">
             <span className="pulse-dot" />
-            <span>Team Directory</span>
+            <span>{t('contacts.status')}</span>
           </div>
-          <h1>Contacts</h1>
-          <p>Manage collaborators, roles and communication channels.</p>
+          <h1>{t('contacts.title')}</h1>
+          <p>{t('contacts.subtitle')}</p>
         </section>
 
         <form className="module-card contact-form-panel" onSubmit={handleSubmit}>
           <div className="panel-header">
-            <h3>Add contact</h3>
-            <span className="panel-badge">New</span>
+            <h3>{t('contacts.addTitle')}</h3>
+            <span className="panel-badge">{t('contacts.newBadge')}</span>
           </div>
 
           <div className="field-grid">
@@ -95,7 +101,7 @@ export function ContactsPage() {
                 className={errors.name ? 'input-error' : ''}
                 value={form.name}
                 onChange={(e) => updateField('name', e.target.value)}
-                placeholder="Full name"
+                placeholder={t('contacts.fullName')}
               />
               {errors.name && <p className="field-error">{errors.name}</p>}
             </div>
@@ -105,7 +111,7 @@ export function ContactsPage() {
                 className={errors.email ? 'input-error' : ''}
                 value={form.email}
                 onChange={(e) => updateField('email', e.target.value)}
-                placeholder="Email address"
+                placeholder={t('contacts.email')}
                 type="email"
               />
               {errors.email && <p className="field-error">{errors.email}</p>}
@@ -116,25 +122,25 @@ export function ContactsPage() {
                 className={errors.role ? 'input-error' : ''}
                 value={form.role}
                 onChange={(e) => updateField('role', e.target.value)}
-                placeholder="Role / department"
+                placeholder={t('contacts.role')}
               />
               {errors.role && <p className="field-error">{errors.role}</p>}
             </div>
           </div>
 
-          <button type="submit" className="primary-action">Add to directory</button>
+          <button type="submit" className="primary-action">{t('contacts.submit')}</button>
         </form>
 
         <div className="search-wrap contacts-search">
           <span className="material-symbols-outlined search-icon">search</span>
-          <input type="text" placeholder="Search contacts..." aria-label="Search contacts" />
+          <input type="text" placeholder={t('contacts.searchPlaceholder')} aria-label={t('contacts.searchPlaceholder')} />
           <span className="search-shortcut">⌘F</span>
         </div>
 
         <section className="projects-panel">
           <div className="projects-header">
-            <h2>Team members</h2>
-            <span>{contacts.length} people</span>
+            <h2>{t('contacts.members')}</h2>
+            <span>{contacts.length} {t('contacts.people')}</span>
           </div>
 
           <div className="list-stack contact-list-stack">

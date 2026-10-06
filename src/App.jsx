@@ -9,29 +9,29 @@ import { TodoPage } from './pages/TodoPage'
 import { WeatherPage } from './pages/WeatherPage'
 
 function AppRoutes() {
-  return (
-    <div className="app-shell">
-      <Routes>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/contacts" element={<ContactsPage />} />
-        <Route path="/todo" element={<TodoPage />} />
-        <Route path="/weather" element={<WeatherPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/quiz" element={<QuizPage />} />
-      </Routes>
-      <BottomNav />
-    </div>
-  )
+	return (
+		<div className="app-shell">
+			<Routes>
+				<Route path="/" element={<DashboardPage />} />
+				<Route path="/contacts" element={<ContactsPage />} />
+				<Route path="/todo" element={<TodoPage />} />
+				<Route path="/weather" element={<WeatherPage />} />
+				<Route path="/blog" element={<BlogPage />} />
+				<Route path="/quiz" element={<QuizPage />} />
+			</Routes>
+			<BottomNav />
+		</div>
+	)
 }
 
 function App() {
-  return (
-    <LanguageProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </LanguageProvider>
-  )
+	return (
+		<LanguageProvider>
+			<BrowserRouter>
+				<AppRoutes />
+			</BrowserRouter>
+		</LanguageProvider>
+	)
 }
 
 export default App
