@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { HashRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { animatePageTransition, revealSectionElements } from './animations'
 import { BottomNav } from './components/BottomNav'
 import { LanguageProvider } from './i18n'
@@ -46,9 +46,9 @@ function AppRoutes() {
 function App() {
 	return (
 		<LanguageProvider>
-			<BrowserRouter>
+			<HashRouter>
 				<AppRoutes />
-			</BrowserRouter>
+			</HashRouter>
 		</LanguageProvider>
 	)
 }
