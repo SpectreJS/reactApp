@@ -148,7 +148,6 @@ export function WeatherPage() {
 							}}
 							placeholder={t('weather.searchPlaceholder')}
 						/>
-						<span className="weather-shortcut">⌘K</span>
 					</div>
 
 					<button
